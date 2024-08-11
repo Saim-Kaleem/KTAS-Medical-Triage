@@ -86,6 +86,15 @@ class_weights_dict = dict(enumerate(class_weights))
 # Apply SMOTE to balance the classes
 smote = SMOTE()
 
+# Define the custom layer for debugging
+class PrintLayer(tf.keras.layers.Layer):
+    def __init__(self, **kwargs):
+        super(PrintLayer, self).__init__(**kwargs)
+
+    def call(self, inputs):
+        tf.print("Attention Output:", inputs)
+        return inputs
+
 # Define the model architecture
 text_input_shape = (max_length, embedding_dim)
 numerical_input_shape = (len(numerical_columns),)
@@ -109,13 +118,11 @@ attention_output = Multiply()([attention_scores, value])
 # Adding the attention output to the convolution output (skip connection)
 attention_output = Add()([conv_layer, attention_output])
 
-# Apply batch normalization to the attention output
-attention_output = BatchNormalization()(attention_output)
-
-print(attention_output)
-
 # Concatenate text and numerical inputs
 combined_inputs = Concatenate()([attention_output, numerical_inputs])
+
+# Apply batch normalization to the combined inputs
+combined_inputs = BatchNormalization()(combined_inputs)
 
 # Fully connected layers
 fc_layer = Dense(64, activation='relu', kernel_regularizer=l2(0.01), kernel_initializer='he_normal')(combined_inputs)
@@ -133,6 +140,13 @@ model = Model(inputs=[text_inputs, numerical_inputs], outputs=output_layer)
 optimizer = Adam(learning_rate=0.001)
 model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 model.summary()
+
+# Define an intermediate model to extract attention_output
+intermediate_model = Model(inputs=[text_inputs, numerical_inputs], outputs=attention_output)
+
+# Print the attention output for the first batch
+attention_output_values = intermediate_model.predict([X_text[:1], X_numerical[:1]])
+print("Attention Output for the first batch:", attention_output_values)
 
 # Custom training loop
 epochs = 40

@@ -115,6 +115,9 @@ lstm_layer = Bidirectional(LSTM(units=128, return_sequences=False, dropout=0.2, 
 # Concatenate text and numerical inputs
 combined_inputs = Concatenate()([attention_output, lstm_layer, numerical_inputs])
 
+# Apply batch normalization to the combined output
+combined_inputs = BatchNormalization()(combined_inputs)
+
 # Fully connected layers
 fc_layer = Dense(64, activation='relu', kernel_regularizer=l2(0.01), kernel_initializer='he_normal')(combined_inputs)
 fc_layer = Dropout(0.3)(fc_layer)
@@ -128,13 +131,13 @@ output_layer = Dense(5, activation='softmax')(fc_layer)
 model = Model(inputs=[text_inputs, numerical_inputs], outputs=output_layer)
 
 # Set an optimizer and compile the model
-optimizer = Adam(learning_rate=0.001)
+optimizer = Adam(learning_rate=0.0005)
 
 model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 model.summary()
 
 # Custom training loop
-num_epochs = 40
+num_epochs = 50
 batch_size = 16
 initial_epochs = 8
 

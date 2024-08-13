@@ -5,6 +5,7 @@ from tensorflow.keras import Model, Input
 from tensorflow.keras.layers import Dense, Dropout, Concatenate, BatchNormalization
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.regularizers import l2
+from tensorflow.keras.callbacks import ModelCheckpoint
 from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -94,7 +95,15 @@ output_layer = Dense(5, activation='softmax')(fc_layer)
 model = Model(inputs=[text_inputs, numerical_inputs], outputs=output_layer)
 optimizer = Adam(learning_rate=0.001)
 model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-model.summary()
+
+# Define the model checkpoint callback
+model_checkpoint_callback = ModelCheckpoint(
+    filepath='models/BERT_model.keras',
+    save_best_only=True,
+    monitor='val_loss',
+    mode='min',
+    verbose=1
+)
 
 # Convert the TensorFlow tensor to numpy for model fitting
 X_text_train = train_bert_output.numpy()
@@ -123,7 +132,8 @@ history_initial = model.fit(
     batch_size=batch_size,
     validation_data=([X_text_val, X_numerical_val], y_val),
     shuffle=True,
-    class_weight=class_weights_dict
+    class_weight=class_weights_dict,
+    callbacks=[model_checkpoint_callback]
 )
 
 # Append initial history
@@ -143,20 +153,16 @@ history_smote = model.fit(
     epochs=num_epochs - initial_epochs,
     batch_size=batch_size,
     validation_data=([X_text_val, X_numerical_val], y_val),
-    shuffle=True
+    shuffle=True,
+    callbacks=[model_checkpoint_callback]
 )
 
 # Append SMOTE history
 for key in history:
     history[key].extend(history_smote.history[key])
 
-# Save the model
-model.save('BERT_model.keras')
-
 # Plot accuracy and loss
 plt.figure(figsize=(12, 5))
-
-# Plot training & validation accuracy values
 plt.subplot(1, 2, 1)
 plt.plot(history['accuracy'])
 plt.plot(history['val_accuracy'])
@@ -164,8 +170,6 @@ plt.title('Model Accuracy')
 plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
 plt.legend(['Train', 'Validation'])
-
-# Plot training & validation loss values
 plt.subplot(1, 2, 2)
 plt.plot(history['loss'])
 plt.plot(history['val_loss'])
@@ -173,7 +177,6 @@ plt.title('Model Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.legend(['Train', 'Validation'])
-
 plt.show()
 
 # Evaluate the model on the validation dataset to get precision, recall, and f1-score

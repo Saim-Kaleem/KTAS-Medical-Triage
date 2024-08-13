@@ -12,8 +12,9 @@ from sklearn.utils import class_weight
 from imblearn.over_sampling import SMOTE
 from transformers import BertTokenizer, TFBertModel
 
-# Load and preprocess the dataset
-data = pd.read_csv('data_cleaned.csv', on_bad_lines='skip')
+# Load the training and validation datasets
+train_data = pd.read_csv('data/ktas_train.csv', on_bad_lines='skip')
+val_data = pd.read_csv('data/ktas_val.csv', on_bad_lines='skip')
 
 # Initialize BERT tokenizer and model
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -21,7 +22,6 @@ bert_model = TFBertModel.from_pretrained('bert-base-uncased')
 
 # Function to tokenize and create BERT embeddings
 def bert_encode(texts, tokenizer, max_len=128):
-    # Encoding the texts into BERT-compatible inputs
     input_ids = []
     attention_masks = []
     for text in texts:
@@ -29,8 +29,8 @@ def bert_encode(texts, tokenizer, max_len=128):
             text,
             add_special_tokens=True,
             max_length=max_len,
-            padding='max_length',  # Updated padding usage
-            truncation=True,       # Explicit truncation
+            padding='max_length',
+            truncation=True,
             return_attention_mask=True,
             return_tensors='tf'
         )
@@ -42,28 +42,39 @@ def bert_encode(texts, tokenizer, max_len=128):
 
     return input_ids, attention_masks
 
-# Preprocess and tokenize text data
-data['Chief_complain'] = data['Chief_complain'].apply(lambda x: x.lower())  # Example preprocessing
-input_ids, attention_masks = bert_encode(data['Chief_complain'], tokenizer)
+# Preprocess and tokenize text data for training and validation
+train_data['Chief_complain'] = train_data['Chief_complain'].apply(lambda x: x.lower())
+val_data['Chief_complain'] = val_data['Chief_complain'].apply(lambda x: x.lower())
 
-# Flatten the output from BERT
-bert_output = bert_model(input_ids, attention_mask=attention_masks).last_hidden_state
-bert_output = tf.reduce_mean(bert_output, axis=1)
+train_input_ids, train_attention_masks = bert_encode(train_data['Chief_complain'], tokenizer)
+val_input_ids, val_attention_masks = bert_encode(val_data['Chief_complain'], tokenizer)
 
-# Convert KTAS_expert to numeric labels
+# Get BERT embeddings
+train_bert_output = bert_model(train_input_ids, attention_mask=train_attention_masks).last_hidden_state
+train_bert_output = tf.reduce_mean(train_bert_output, axis=1)
+
+val_bert_output = bert_model(val_input_ids, attention_mask=val_attention_masks).last_hidden_state
+val_bert_output = tf.reduce_mean(val_bert_output, axis=1)
+
+# Convert KTAS_expert to numeric labels for training and validation data
 label_encoder = LabelEncoder()
-data['KTAS_expert'] = label_encoder.fit_transform(data['KTAS_expert'])
+train_data['KTAS_expert'] = label_encoder.fit_transform(train_data['KTAS_expert'])
+val_data['KTAS_expert'] = label_encoder.transform(val_data['KTAS_expert'])
 
-# Normalize numerical data
+# Normalize numerical data for training and validation
 scaler = StandardScaler()
 numerical_columns = ['Sex', 'Age', 'Arrival mode', 'Injury', 'Mental', 'Pain', 'BP', 'HR', 'RR', 'BT', 'Saturation']
-data[numerical_columns] = scaler.fit_transform(data[numerical_columns])
-X_numerical = data[numerical_columns].values
-y = data['KTAS_expert'].values
+train_data[numerical_columns] = scaler.fit_transform(train_data[numerical_columns])
+val_data[numerical_columns] = scaler.transform(val_data[numerical_columns])
+
+X_numerical_train = train_data[numerical_columns].values
+X_numerical_val = val_data[numerical_columns].values
+y_train = train_data['KTAS_expert'].values
+y_val = val_data['KTAS_expert'].values
 
 # Define the model architecture
 numerical_input_shape = (len(numerical_columns),)
-text_inputs = Input(shape=(bert_output.shape[-1],), name='text_input')  # Adjusted for BERT output
+text_inputs = Input(shape=(train_bert_output.shape[-1],), name='text_input')
 numerical_inputs = Input(shape=numerical_input_shape, name='numerical_input')
 
 # Concatenate text and numerical inputs
@@ -85,14 +96,17 @@ optimizer = Adam(learning_rate=0.001)
 model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 model.summary()
 
-# Create X_text for input
-X_text = bert_output.numpy()  # Convert the TensorFlow tensor to numpy for model fitting
+# Convert the TensorFlow tensor to numpy for model fitting
+X_text_train = train_bert_output.numpy()
+X_text_val = val_bert_output.numpy()
 
 # Custom training loop
 num_epochs = 50
 batch_size = 16
 initial_epochs = 8
-class_weights_dict = class_weight.compute_class_weight('balanced', classes=np.unique(y), y=y)
+
+# Calculate class weights
+class_weights_dict = class_weight.compute_class_weight('balanced', classes=np.unique(y_train), y=y_train)
 class_weights_dict = dict(enumerate(class_weights_dict))
 
 history = {
@@ -103,20 +117,34 @@ history = {
 }
 
 # Initial training with class weights
-history_initial = model.fit([X_text, X_numerical], y, epochs=initial_epochs, batch_size=batch_size, validation_split=0.2, shuffle=True, class_weight=class_weights_dict)
+history_initial = model.fit(
+    [X_text_train, X_numerical_train], y_train,
+    epochs=initial_epochs,
+    batch_size=batch_size,
+    validation_data=([X_text_val, X_numerical_val], y_val),
+    shuffle=True,
+    class_weight=class_weights_dict
+)
 
 # Append initial history
 for key in history:
     history[key].extend(history_initial.history[key])
 
-# Apply SMOTE
-smote = SMOTE()
-X_resampled, y_resampled = smote.fit_resample(np.hstack((X_text, X_numerical)), y)
-X_text_resampled = X_resampled[:, :X_text.shape[1]].reshape(-1, X_text.shape[1])
-X_numerical_resampled = X_resampled[:, X_text.shape[1]:]
+# Apply SMOTE to the training data
+X_resampled, y_resampled = SMOTE().fit_resample(
+    np.hstack((X_text_train, X_numerical_train)), y_train
+)
+X_text_resampled = X_resampled[:, :X_text_train.shape[1]].reshape(-1, X_text_train.shape[1])
+X_numerical_resampled = X_resampled[:, X_text_train.shape[1]:]
 
 # Continue training without class weights
-history_smote = model.fit([X_text_resampled, X_numerical_resampled], y_resampled, epochs=num_epochs - initial_epochs, batch_size=batch_size, validation_split=0.2, shuffle=True)
+history_smote = model.fit(
+    [X_text_resampled, X_numerical_resampled], y_resampled,
+    epochs=num_epochs - initial_epochs,
+    batch_size=batch_size,
+    validation_data=([X_text_val, X_numerical_val], y_val),
+    shuffle=True
+)
 
 # Append SMOTE history
 for key in history:
@@ -148,10 +176,10 @@ plt.legend(['Train', 'Validation'])
 
 plt.show()
 
-# Evaluate the model on the entire dataset to get precision, recall, and f1-score
-y_pred = model.predict([X_text, X_numerical])
+# Evaluate the model on the validation dataset to get precision, recall, and f1-score
+y_pred = model.predict([X_text_val, X_numerical_val])
 y_pred_classes = np.argmax(y_pred, axis=1)
 
 # Print classification report
 class_names = [str(label) for label in label_encoder.classes_]
-print(classification_report(y, y_pred_classes, target_names=class_names))
+print(classification_report(y_val, y_pred_classes, target_names=class_names))

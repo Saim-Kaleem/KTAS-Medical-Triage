@@ -1,10 +1,34 @@
 import pandas as pd
 
-# Read the CSV in chunks
-data_iterator = pd.read_csv('Hospital Triage and Patient History.csv', on_bad_lines='skip', delimiter=',', encoding='utf-8', chunksize=1000)
+data = pd.read_csv('data_utf8.csv', on_bad_lines='skip', delimiter=';')
 
-# Get the first chunk
-first_chunk = next(data_iterator)
+# Drop columns that are not needed
+data = data.drop(columns=['Group', 'KTAS_RN', 'Disposition', 'Error_group', 'KTAS duration_min', 'mistriage', 'Length of stay_min'])
 
-# Print the head of the first chunk
-print(first_chunk.head())
+# Decode columns with number values
+data['Sex'] = data['Sex'].replace({1: 0, 2: 1})
+data['Arrival mode'] = data['Arrival mode'].replace({1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 7: 6})
+data['Injury'] = data['Injury'].replace({1: 0, 2: 1})
+data['Mental'] = data['Mental'].replace({1: 0, 2: 1, 3: 2, 4: 3})
+data['Pain'] = data['Pain'].replace({2: 0})
+
+# Convert relevant columns to numeric values
+data['SBP'] = pd.to_numeric(data['SBP'], errors='coerce')
+data['DBP'] = pd.to_numeric(data['DBP'], errors='coerce')
+data['HR'] = pd.to_numeric(data['HR'], errors='coerce')
+data['RR'] = pd.to_numeric(data['RR'], errors='coerce')
+data['BT'] = pd.to_numeric(data['BT'], errors='coerce')
+data['Saturation'] = pd.to_numeric(data['Saturation'], errors='coerce')
+data['NRS_pain'] = pd.to_numeric(data['NRS_pain'], errors='coerce')
+
+# Replace NaN values with "normal" values for each category
+data['SBP'].fillna(110, inplace=True)  # Normal SBP
+data['DBP'].fillna(70, inplace=True)   # Normal DBP
+data['HR'].fillna(75, inplace=True)    # Normal HR
+data['RR'].fillna(16, inplace=True)    # Normal RR
+data['BT'].fillna(37, inplace=True)    # Normal BT
+data['Saturation'].fillna(98, inplace=True)  # Normal Saturation
+data['NRS_pain'].fillna(0, inplace=True)  # No pain
+
+print(data.head(10))
+data.to_csv('data_cleaned2.csv', index=False)

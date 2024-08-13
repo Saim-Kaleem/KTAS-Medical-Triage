@@ -2,10 +2,10 @@ import pandas as pd
 import re
 import numpy as np
 from gensim.models import Word2Vec
-import tensorflow as tf
 from tensorflow.keras import Model, Input
 from tensorflow.keras.layers import Conv1D, GlobalMaxPooling1D, Dense, Dropout, Dot, Softmax, Multiply, Add, Concatenate, BatchNormalization, Bidirectional, LSTM
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.models import load_model
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.regularizers import l2
@@ -16,11 +16,11 @@ from sklearn.utils import class_weight
 from imblearn.over_sampling import SMOTE
 
 # Load and preprocess the dataset
-data = pd.read_csv('data_cleaned.csv', on_bad_lines='skip')
+data = pd.read_csv('data_cleaned2.csv', on_bad_lines='skip')
 
 # Required columns
 text_columns = ['Chief_complain']
-numerical_columns = ['Sex', 'Age', 'Arrival mode', 'Injury', 'Mental', 'Pain', 'BP', 'HR', 'RR', 'BT', 'Saturation']
+numerical_columns = ['Sex', 'Age', 'Arrival mode', 'Injury', 'Mental', 'Pain', 'SBP', 'DBP', 'HR', 'RR', 'BT', 'Saturation']
 label_column = 'KTAS_expert'
 
 # Shuffle rows in the dataset
@@ -44,6 +44,8 @@ def clean_text(text):
     return text
 
 data['Chief_complain'] = data['Chief_complain'].apply(clean_text)
+# data['Diagnosis in ED'] = data['Diagnosis in ED'].apply(clean_text)
+# data['Chief_complain'] = data['Chief_complain'].fillna('') + ' ' + data['Diagnosis in ED'].fillna('')
 
 # Tokenize the text data
 data['tokens'] = data['Chief_complain'].apply(lambda x: x.split())
@@ -119,9 +121,9 @@ combined_inputs = Concatenate()([attention_output, lstm_layer, numerical_inputs]
 combined_inputs = BatchNormalization()(combined_inputs)
 
 # Fully connected layers
-fc_layer = Dense(64, activation='relu', kernel_regularizer=l2(0.01), kernel_initializer='he_normal')(combined_inputs)
+fc_layer = Dense(128, activation='relu', kernel_regularizer=l2(0.01), kernel_initializer='he_normal')(combined_inputs)
 fc_layer = Dropout(0.3)(fc_layer)
-fc_layer = Dense(32, activation='relu', kernel_regularizer=l2(0.01), kernel_initializer='he_normal')(fc_layer)
+fc_layer = Dense(64, activation='relu', kernel_regularizer=l2(0.01), kernel_initializer='he_normal')(fc_layer)
 fc_layer = Dropout(0.2)(fc_layer)
 
 # Output layer with softmax activation
@@ -148,8 +150,18 @@ history = {
     'val_loss': []
 }
 
+best_val_accuracy = 0.0
+
 # Initial training with class weights
 history_initial = model.fit([X_text, X_numerical], y, epochs=initial_epochs, batch_size=batch_size, validation_split=0.2, shuffle=True, class_weight=class_weights_dict)
+
+# Check for the best model and save it
+for epoch in range(initial_epochs):
+    val_accuracy = history_initial.history['val_accuracy'][epoch]
+    if val_accuracy > best_val_accuracy:
+        best_val_accuracy = val_accuracy
+        model.save('ktas_model.keras')
+        print(f"Saved model at epoch {epoch+1} with val_accuracy: {val_accuracy:.4f}")
 
 # Append initial history
 for key in history:
@@ -164,12 +176,17 @@ X_numerical_resampled = X_resampled[:, X_text.shape[1] * X_text.shape[2]:]
 # Continue training without class weights
 history_smote = model.fit([X_text_resampled, X_numerical_resampled], y_resampled, epochs=num_epochs - initial_epochs, batch_size=batch_size, validation_split=0.2, shuffle=True)
 
+# Check for the best model and save it
+for epoch in range(num_epochs - initial_epochs):
+    val_accuracy = history_smote.history['val_accuracy'][epoch]
+    if val_accuracy > best_val_accuracy:
+        best_val_accuracy = val_accuracy
+        model.save('ktas_model.keras')
+        print(f"Saved model at epoch {initial_epochs + epoch + 1} with val_accuracy: {val_accuracy:.4f}")
+
 # Append SMOTE history
 for key in history:
     history[key].extend(history_smote.history[key])
-
-# Save the model
-model.save('ktas_model.keras')
 
 # Plot accuracy and loss
 plt.figure(figsize=(12, 5))
@@ -197,9 +214,15 @@ plt.show()
 # Convert the class labels to string format
 class_names = [str(label) for label in label_encoder.classes_]
 
-# Evaluate the model on the entire dataset to get precision, recall, and f1-score
-y_pred = model.predict([X_text, X_numerical])
+# Load the best model
+best_model = load_model('ktas_model.keras')
+
+# Evaluate the best model on the entire dataset to get precision, recall, and f1-score
+y_pred = best_model.predict([X_text, X_numerical])
 y_pred_classes = np.argmax(y_pred, axis=1)
 
-# Print classification report
+# Convert the class labels to string format
+class_names = [str(label) for label in label_encoder.classes_]
+
+# Print classification report for the best model
 print(classification_report(y, y_pred_classes, target_names=class_names))

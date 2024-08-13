@@ -3,7 +3,7 @@ import pandas as pd
 data = pd.read_csv('data_utf8.csv', on_bad_lines='skip', delimiter=';')
 
 # Drop columns that are not needed
-data = data.drop(columns=['Group', 'KTAS_RN', 'NRS_pain', 'Disposition', 'Error_group', 'KTAS duration_min', 'mistriage', 'Length of stay_min'])
+data = data.drop(columns=['Group', 'KTAS_RN', 'Disposition', 'Error_group', 'KTAS duration_min', 'mistriage', 'Length of stay_min'])
 
 # Decode columns with number values
 data['Sex'] = data['Sex'].replace({1: 0, 2: 1})
@@ -19,6 +19,7 @@ data['HR'] = pd.to_numeric(data['HR'], errors='coerce')
 data['RR'] = pd.to_numeric(data['RR'], errors='coerce')
 data['BT'] = pd.to_numeric(data['BT'], errors='coerce')
 data['Saturation'] = pd.to_numeric(data['Saturation'], errors='coerce')
+data['NRS_pain'] = pd.to_numeric(data['NRS_pain'], errors='coerce')
 
 # Replace NaN values with "normal" values for each category
 data['SBP'].fillna(110, inplace=True)  # Normal SBP
@@ -27,6 +28,7 @@ data['HR'].fillna(75, inplace=True)    # Normal HR
 data['RR'].fillna(16, inplace=True)    # Normal RR
 data['BT'].fillna(37, inplace=True)    # Normal BT
 data['Saturation'].fillna(98, inplace=True)  # Normal Saturation
+data['NRS_pain'].fillna(0, inplace=True)  # No pain
 
 # Making brackets for Blood Pressure
 def get_bp_category(row):
@@ -116,6 +118,19 @@ def replace_o2(row):
     elif (95 <= o2 <= 100) or o2 == 'NaN':
         return 2  # Normal
 data['Saturation'] = data.apply(replace_o2, axis=1)
+
+# Making brackets for Pain Scale
+def replace_nrs(row):
+    nrs = row['NRS_pain']
+    if nrs == 0:
+        return 0  # No pain
+    elif 1 <= nrs <= 3:
+        return 1  # Mild pain
+    elif 4 <= nrs <= 6:
+        return 2  # Moderate pain
+    elif 7 <= nrs <= 10:
+        return 3  # Severe pain
+data['NRS_pain'] = data.apply(replace_nrs, axis=1)
 
 print(data.head(10))
 data.to_csv('data_cleaned.csv', index=False)

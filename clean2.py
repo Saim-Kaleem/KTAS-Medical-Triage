@@ -1,6 +1,6 @@
 import pandas as pd
 
-data = pd.read_csv('data_utf8.csv', on_bad_lines='skip', delimiter=';')
+data = pd.read_csv('data/data_utf8.csv', on_bad_lines='skip', delimiter=';')
 
 # Drop columns that are not needed
 data = data.drop(columns=['Group', 'KTAS_RN', 'Disposition', 'Error_group', 'KTAS duration_min', 'mistriage', 'Length of stay_min'])
@@ -28,7 +28,7 @@ data['HR'].fillna(75, inplace=True)    # Normal HR
 data['RR'].fillna(16, inplace=True)    # Normal RR
 data['BT'].fillna(37, inplace=True)    # Normal BT
 data['Saturation'].fillna(98, inplace=True)  # Normal Saturation
-data['NRS_pain'].fillna(0, inplace=True)  # No pain
+data['NRS_pain'].fillna(4, inplace=True)  # No pain
 
 print(data.head(10))
-data.to_csv('data_cleaned2.csv', index=False)
+data.to_csv('data/data_cleaned2.csv', index=False)

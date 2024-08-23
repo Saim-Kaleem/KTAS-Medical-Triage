@@ -54,7 +54,7 @@ data['tokens'] = data['Chief_complain'].apply(lambda x: x.split())
 # w2v_model = Word2Vec(sentences=data['tokens'], vector_size=50, window=3, min_count=1, workers=4)
 
 # Load pretrained embeddings
-biowordvec_model = KeyedVectors.load_word2vec_format('embeddings/Bio_embedding_extrinsic', binary=True)
+biowordvec_model = KeyedVectors.load_word2vec_format('embeddings/bio_embedding_extrinsic', binary=True)
 
 # Create an embedding matrix
 # embedding_matrix = w2v_model.wv

@@ -86,6 +86,10 @@ X_text = pad_sequences(data['embeddings'].apply(lambda x: [embedding for embeddi
 X_numerical = data[numerical_columns].values
 y = data['KTAS_expert'].values
 
+print(f"X_text shape: {X_text.shape}")
+print(f"X_numerical shape: {X_numerical.shape}")
+print(f"y shape: {y.shape}")
+
 # Calculate class weights
 class_weights = class_weight.compute_class_weight('balanced', classes=np.unique(y), y=y)
 class_weights_dict = dict(enumerate(class_weights))

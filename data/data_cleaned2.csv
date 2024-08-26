@@ -7,7 +7,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,54,6,3,0,fever,0,1,3.0,140.0,90.0,94.0,20.0,38.1,98.0,"Fever, unspecified",4
 1,49,11,2,0,With chest discomfort,0,1,3.0,110.0,70.0,70.0,20.0,36.2,98.0,"Angina pectoris, unspecified",3
 1,78,14,2,0,"pain, chest",0,1,3.0,169.0,86.0,80.0,20.0,36.0,98.0,Acute coronary syndrome,3
-1,32,10,2,0,LBP - Low back pain,0,1,3.0,140.0,75.0,91.0,20.0,36.6,98.0,Herniated disc disease of lumbar spine with radiculopathy,5
+1,32,10,2,0,Low back pain,0,1,3.0,140.0,75.0,91.0,20.0,36.6,98.0,Herniated disc disease of lumbar spine with radiculopathy,5
 0,38,6,2,0,"Eczema, Eyelid",0,1,3.0,130.0,80.0,80.0,20.0,36.3,97.0,Ocular pain,5
 1,43,3,2,0,acute epigastric pain,0,1,3.0,148.0,104.0,72.0,16.0,36.5,98.0,Acute gastritis,4
 1,45,3,2,0,"pain, leg",0,1,3.0,141.0,81.0,86.0,18.0,36.6,98.0,Gout site unspecified,5
@@ -53,7 +53,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,39,17,2,0,both leg pain,0,1,3.0,130.0,80.0,93.0,20.0,36.3,99.0,"Rhabdomyolysis, lower leg",5
 0,81,5,3,1,Left leg pain,0,1,4.0,200.0,160.0,80.0,20.0,36.0,98.0,"Closed, fracture of shaft of femur",4
 1,29,3,2,0,knee pain,0,1,6.0,110.0,70.0,88.0,20.0,36.4,98.0,"Pain in limb, knee joint",4
-1,64,7,3,1,H-Headache,0,0,4.0,150.0,90.0,85.0,20.0,36.0,95.0,Traumatic subdural hemorrhage without open intracranial wound,2
+1,64,7,3,1,Headache,0,0,4.0,150.0,90.0,85.0,20.0,36.0,95.0,Traumatic subdural hemorrhage without open intracranial wound,2
 0,30,12,0,1,needle stick injury,0,1,1.0,113.0,71.0,76.0,20.0,36.5,98.0,Needlestick injury,3
 1,72,6,2,0,Left chest pain,0,1,2.0,110.0,70.0,92.0,20.0,36.7,96.0,Unstable angina,2
 0,68,7,2,0,palpitation,0,1,2.0,119.0,60.0,93.0,16.0,36.8,98.0,Palpitation,3
@@ -74,8 +74,8 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,44,6,2,0,chest pain rt,0,1,4.0,116.0,72.0,70.0,20.0,36.0,98.0,Atypical chest pain,3
 0,53,9,2,0,epigastric pain,0,1,4.0,156.0,85.0,75.0,20.0,36.3,98.0,Epigastric pain,3
 0,70,3,1,0,epigastric pain,0,1,4.0,100.0,60.0,90.0,20.0,36.0,98.0,Infectious or septic colitis,3
-0,82,5,2,0,V - vomiting,0,1,4.0,110.0,60.0,72.0,20.0,36.0,97.0,Nause with vomiting,3
-0,20,1,1,0,HA - Headache,0,1,4.0,100.0,70.0,84.0,20.0,37.6,98.0,Headache,3
+0,82,5,2,0,vomiting,0,1,4.0,110.0,60.0,72.0,20.0,36.0,97.0,Nause with vomiting,3
+0,20,1,1,0,Headache,0,1,4.0,100.0,70.0,84.0,20.0,37.6,98.0,Headache,3
 0,22,12,2,1,both eye pain,0,1,4.0,110.0,70.0,74.0,20.0,36.4,98.0,Keratoconjunctivitis due to Acanthamoeba (H19.2*),3
 1,29,5,2,0,leg pain left,0,1,4.0,110.0,70.0,110.0,20.0,36.4,98.0,Complex regional pain syndrome type II of lower limb,4
 1,33,15,2,0,tooth pain,0,1,4.0,162.0,107.0,62.0,20.0,36.2,98.0,Toothache,4
@@ -141,7 +141,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,71,9,2,0,dizziness,0,0,4.0,187.0,98.0,84.0,20.0,36.5,98.0,Dizziness,3
 1,73,8,2,0,dyspnea,0,0,4.0,140.0,80.0,86.0,24.0,36.4,89.0,,2
 0,74,8,0,0,dizziness,0,0,4.0,140.0,100.0,58.0,20.0,36.1,99.0,"Acute renal failure, unspecified",3
-1,77,4,2,0,D - Diarrhea,0,0,4.0,160.0,100.0,108.0,20.0,36.5,97.0,Illness NOS,4
+1,77,4,2,0,Diarrhea,0,0,4.0,160.0,100.0,108.0,20.0,36.5,97.0,Illness NOS,4
 1,78,10,1,0,general weakness,0,0,4.0,194.0,90.0,93.0,20.0,36.9,98.0,Diabetic neuropathy polyneuropathy,4
 0,79,10,2,0,dizziness,0,0,4.0,120.0,80.0,80.0,20.0,36.4,99.0,Dizziness and giddiness,3
 0,88,10,2,0,low Hb,0,0,4.0,96.0,59.0,100.0,20.0,36.0,98.0,Stomach cancer advanced,3
@@ -221,7 +221,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,74,2,2,0,abd pain,0,1,3.0,189.0,100.0,79.0,18.0,36.3,98.0,Symptomatic gallbladder stone without obstruction,4
 0,57,5,2,0,"pain, low back",0,1,3.0,197.0,109.0,74.0,18.0,36.8,98.0,Low back pain sacral and sacrococcygeal region,4
 0,58,5,2,0,"pain, chest",0,1,3.0,150.0,93.0,73.0,18.0,36.8,98.0,Chest pain,2
-1,82,12,1,1,LBP - Low back pain,0,1,3.0,155.0,84.0,71.0,20.0,37.0,98.0,Injury of lower back,4
+1,82,12,1,1,Low back pain,0,1,3.0,155.0,84.0,71.0,20.0,37.0,98.0,Injury of lower back,4
 0,64,13,2,0,fever,0,1,3.0,180.0,103.0,100.0,20.0,37.5,98.0,Fever,4
 0,72,5,2,0,for A/tapping,0,1,3.0,131.0,54.0,69.0,16.0,37.4,98.0,Liver cirrhosis Child-Pugh A,4
 0,45,6,2,0,"Discomfort, Chest",0,1,3.0,131.0,73.0,70.0,20.0,36.7,98.0,Sprain and strain of rib,4
@@ -231,9 +231,9 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,75,11,2,0,headache,0,1,3.0,168.0,87.0,65.0,20.0,36.8,98.0,Headache,3
 0,35,9,2,0,acute epigastric pain,0,1,3.0,141.0,83.0,58.0,16.0,36.2,98.0,Acute gastritis,4
 1,16,8,2,0,throat pain,0,1,3.0,161.0,97.0,90.0,20.0,39.3,98.0,Acute pharyngotonsillitis,4
-0,17,5,2,0,H-Headache,0,1,3.0,100.0,60.0,76.0,20.0,36.3,99.0,"Non-insulin-dependent diabetes of the young, with nonketotic hyperglycemic-hyperosmolar coma(NKHHC)",4
+0,17,5,2,0,Headache,0,1,3.0,100.0,60.0,76.0,20.0,36.3,99.0,"Non-insulin-dependent diabetes of the young, with nonketotic hyperglycemic-hyperosmolar coma(NKHHC)",4
 1,18,13,2,0,ocular pain,0,1,3.0,120.0,75.0,89.0,18.0,36.2,98.0,Acute conjunctivitis,4
-1,18,8,2,0,PTx - Pneumothorax,0,1,3.0,125.0,66.0,75.0,20.0,36.5,98.0,Pneumothorax,4
+1,18,8,2,0,Pneumothorax,0,1,3.0,125.0,66.0,75.0,20.0,36.5,98.0,Pneumothorax,4
 0,18,4,2,0,abd pain,0,1,3.0,136.0,90.0,98.0,20.0,37.0,98.0,"Abdomen pain, generalized",4
 1,18,6,2,0,Abd. pain,0,1,3.0,110.0,70.0,80.0,20.0,36.8,98.0,Hirschsprung's disease,4
 0,19,3,2,0,lower abdominal pain,0,1,3.0,110.0,70.0,104.0,22.0,37.5,99.0,"Regional colitis, unspecified",4
@@ -262,7 +262,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,27,3,1,0,LLQ pain,0,1,3.0,130.0,80.0,92.0,20.0,36.5,97.0,Unspecified abdominal pain,4
 0,27,9,2,0,vomiting,0,1,3.0,115.0,74.0,85.0,16.0,36.7,98.0,Vomiting,4
 1,27,8,1,1,Knee Injury,0,1,3.0,136.0,79.0,94.0,16.0,36.2,98.0,Multiple abrasion,5
-0,27,2,1,1,LBP - Low back pain,0,1,3.0,149.0,90.0,95.0,20.0,36.0,98.0,Fracture of coccyx closed,4
+0,27,2,1,1,Low back pain,0,1,3.0,149.0,90.0,95.0,20.0,36.0,98.0,Fracture of coccyx closed,4
 0,27,7,2,0,headache,0,1,3.0,119.0,95.0,75.0,18.0,36.5,98.0,Headache,4
 1,27,9,2,1,facial injury,0,1,3.0,117.0,65.0,82.0,20.0,36.2,98.0,Fracture of orbital wall closed,4
 1,27,13,2,0,epigastric pain,0,1,3.0,145.0,78.0,73.0,20.0,36.2,98.0,Acute gastroenteritis,4
@@ -299,7 +299,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,36,8,2,0,diffuse abdominal pain,0,1,3.0,110.0,70.0,76.0,20.0,36.5,98.0,"Upper abdominal pain, unspecified",4
 0,36,10,2,1,Eye Injury,0,1,3.0,113.0,76.0,59.0,20.0,36.5,98.0,Subconjunctival hemorrhage,4
 0,36,7,2,0,headache,0,1,3.0,100.0,60.0,80.0,20.0,36.4,98.0,Headache,4
-1,37,7,3,0,LOC - Loss of consciousness,0,1,3.0,140.0,80.0,105.0,20.0,36.8,98.0,Syncope,3
+1,37,7,3,0,Loss of consciousness,0,1,3.0,140.0,80.0,105.0,20.0,36.8,98.0,Syncope,3
 1,38,9,2,0,Lt flank pain,0,1,3.0,128.0,87.0,102.0,20.0,36.5,98.0,Acute gastroenteritis,4
 1,39,5,2,0,ant. chest pain,0,1,3.0,140.0,100.0,76.0,18.0,36.1,99.0,Unstable angina,2
 0,39,9,2,0,cough,0,1,3.0,157.0,109.0,86.0,22.0,36.8,98.0,Cough,3
@@ -335,12 +335,12 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,48,4,2,0,Abd. pain,0,1,3.0,110.0,70.0,80.0,20.0,36.3,98.0,Unspecified abdominal pain,4
 1,48,9,3,0,mental change,0,1,3.0,100.0,60.0,100.0,20.0,36.0,90.0,Hypo-osmolality and hyponatraemia,2
 0,49,2,2,1,Open Wound,0,1,3.0,120.0,80.0,74.0,20.0,36.2,98.0,"Open wound of other parts of head, face",4
-0,49,8,2,0,HA - Headache,0,1,3.0,150.0,90.0,62.0,20.0,36.0,98.0,Headache,4
+0,49,8,2,0,Headache,0,1,3.0,150.0,90.0,62.0,20.0,36.0,98.0,Headache,4
 1,49,5,3,0,ant. chest pain,0,1,3.0,110.0,80.0,84.0,20.0,36.6,98.0,Ischaemic chest pain,2
 0,50,5,1,0,whirling type vertigo,0,1,3.0,138.0,98.0,68.0,20.0,36.0,98.0,Anxiety disorder,3
 0,50,8,2,0,rt flank pain,0,1,3.0,145.0,92.0,65.0,20.0,36.6,98.0,Kidney and ureter stone,4
 1,50,4,2,0,rt. side neck pain,0,1,3.0,144.0,89.0,74.0,20.0,36.0,98.0,Herniated disc disease of cervical spine,4
-0,51,6,2,0,H-Headache,0,1,3.0,150.0,100.0,98.0,20.0,36.4,98.0,Headache,4
+0,51,6,2,0,Headache,0,1,3.0,150.0,100.0,98.0,20.0,36.4,98.0,Headache,4
 1,51,4,1,0,diffuse abdominal pain,0,1,3.0,150.0,100.0,98.0,20.0,36.4,97.0,Unspecified abdominal pain,4
 1,51,10,2,0,fever,0,1,3.0,120.0,80.0,66.0,20.0,36.6,98.0,Abscess of liver,4
 1,51,8,2,1,Open Wound,0,1,3.0,110.0,70.0,88.0,20.0,36.7,98.0,"Open wound of other parts of head, face",4
@@ -388,7 +388,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,66,8,1,0,ant. chest pain,0,1,3.0,110.0,70.0,84.0,20.0,36.4,99.0,Ischaemic chest pain,2
 1,66,9,2,0,VOIDING PAIN,0,1,3.0,129.0,82.0,64.0,20.0,36.6,98.0,Acute urinary retension,4
 0,66,6,2,0,???,0,1,3.0,127.0,63.0,97.0,20.0,37.5,98.0,Acute gastroenteritis,4
-1,66,8,2,0,LOC - Loss of consciousness,0,1,3.0,130.0,80.0,80.0,20.0,36.5,97.0,Dizziness and giddiness,3
+1,66,8,2,0,Loss of consciousness,0,1,3.0,130.0,80.0,80.0,20.0,36.5,97.0,Dizziness and giddiness,3
 1,66,7,2,0,ant. chest pain,0,1,3.0,120.0,80.0,63.0,20.0,36.0,97.0,Other chest pain,2
 0,67,12,2,0,RLQ pain,0,1,3.0,120.0,80.0,88.0,20.0,36.3,97.0,"Acute appendicitis, other and unspecified",4
 1,68,5,1,0,LOC,0,1,3.0,110.0,70.0,62.0,22.0,36.0,95.0,Syncope,2
@@ -458,7 +458,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,16,15,2,1,Ankle Injury,0,1,4.0,114.0,61.0,80.0,20.0,37.5,98.0,Injury of ankle,4
 0,18,7,2,1,right forearm laceration,0,1,4.0,120.0,84.0,88.0,18.0,36.8,98.0,Laceration of forearm,4
 0,19,7,2,1,Ankle Injury,0,1,4.0,154.0,70.0,75.0,20.0,36.0,98.0,Injury of ankle,4
-0,22,6,2,0,H-Headache,0,1,4.0,110.0,70.0,72.0,20.0,36.4,98.0,Infectious or septic colitis,4
+0,22,6,2,0,Headache,0,1,4.0,110.0,70.0,72.0,20.0,36.4,98.0,Infectious or septic colitis,4
 1,22,7,2,1,Open Wound,0,1,4.0,110.0,70.0,100.0,20.0,36.5,99.0,"Open wound of other parts of head, face",4
 1,22,5,2,1,mandibular pain,0,1,4.0,160.0,73.0,117.0,18.0,36.0,98.0,Injury of mandible,4
 0,23,5,2,1,Toe injury,0,1,4.0,119.0,56.0,75.0,20.0,36.5,98.0,Fracture of foot closed,4
@@ -605,7 +605,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,43,11,2,0,diffuse abdominal pain,0,1,5.0,140.0,90.0,87.0,20.0,36.0,96.0,Other acute pancreatitis,3
 0,43,8,1,1,elbow painful swelling lt.,0,1,5.0,140.0,100.0,108.0,20.0,36.4,98.0,Contusion of elbow,4
 1,44,5,2,1,ankle pain,0,1,5.0,139.0,80.0,97.0,18.0,36.3,98.0,Injury of ankle and foot,4
-0,45,4,2,0,LBP - Low back pain,0,1,5.0,146.0,88.0,75.0,20.0,36.0,98.0,Sprain of lumbar spine,4
+0,45,4,2,0,Low back pain,0,1,5.0,146.0,88.0,75.0,20.0,36.0,98.0,Sprain of lumbar spine,4
 1,47,5,2,1,Open Wound,0,1,5.0,130.0,80.0,93.0,20.0,36.3,98.0,"Superficial injury of head, part unspecified, contusion",4
 1,47,13,1,1,backache,0,1,5.0,116.0,60.0,57.0,16.0,36.8,98.0,Herniated disc disease of lumbar spine with radiculopathy,3
 1,47,12,2,1,Open Wound,0,1,5.0,110.0,60.0,92.0,20.0,36.6,98.0,"Open wound of finger(s), NOS",4
@@ -706,7 +706,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,60,3,2,0,dysuria,0,1,6.0,130.0,60.0,66.0,20.0,36.6,98.0,Urinary tract obstruction NOS,4
 1,61,8,3,1,abd pain,0,1,6.0,110.0,70.0,75.0,16.0,37.0,98.0,Contusion of abdomen wall,1
 1,62,8,0,0,Left chest pain,0,1,6.0,110.0,80.0,78.0,20.0,36.2,98.0,Ischaemic chest pain,2
-1,66,6,2,0,D - Diarrhea,0,1,6.0,110.0,60.0,98.0,20.0,36.5,99.0,"Regional colitis, unspecified",3
+1,66,6,2,0,Diarrhea,0,1,6.0,110.0,60.0,98.0,20.0,36.5,99.0,"Regional colitis, unspecified",3
 1,66,9,1,1,facial injury,0,1,6.0,86.0,44.0,66.0,20.0,36.3,98.0,"Open wound of head, other part",3
 0,68,5,2,0,headache,0,1,6.0,200.0,110.0,90.0,20.0,36.8,98.0,Tension-type headache,3
 1,68,10,0,0,RUQ pain,0,1,6.0,120.0,80.0,78.0,20.0,36.8,98.0,Acute cholecystitis,3
@@ -824,12 +824,12 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,80,7,1,0,dyspnea,0,0,4.0,110.0,70.0,87.0,28.0,36.8,98.0,Dyspnea,2
 0,82,8,1,0,dyspnea,0,0,4.0,181.0,74.0,61.0,22.0,36.3,98.0,Heart failure,2
 0,86,6,1,0,anemia w/u,0,0,4.0,110.0,66.0,100.0,20.0,37.0,98.0,Irritability and anger,3
-1,86,6,3,1,DZ - Dizziness,0,0,4.0,160.0,76.0,64.0,20.0,36.0,98.0,Dizziness,3
+1,86,6,3,1,Dizziness,0,0,4.0,160.0,76.0,64.0,20.0,36.0,98.0,Dizziness,3
 0,88,5,2,0,"Discomfort, Chest",0,0,4.0,119.0,66.0,75.0,20.0,36.5,98.0,Dyspnea,2
 1,16,7,1,1,forehead laceration,0,0,4.0,137.0,79.0,81.0,16.0,37.7,98.0,Injury of head,4
 0,16,6,1,0,post seizure,0,0,4.0,132.0,98.0,94.0,18.0,36.6,98.0,Seizure,3
 1,17,15,2,0,light headness,0,0,4.0,100.0,60.0,68.0,20.0,36.2,98.0,Syncope,3
-0,17,5,0,0,H-Headache,0,0,4.0,90.0,60.0,128.0,24.0,38.1,99.0,(Seizure) Convulsive NOS,3
+0,17,5,0,0,Headache,0,0,4.0,90.0,60.0,128.0,24.0,38.1,99.0,(Seizure) Convulsive NOS,3
 1,18,9,3,0,altered mentality,2,0,4.0,102.0,65.0,86.0,20.0,36.3,98.0,Acute ethanol intoxication,2
 0,19,9,2,0,eye discomfort,0,0,4.0,132.0,78.0,91.0,20.0,36.5,98.0,Corneal erosion,4
 1,19,9,0,0,po medication,0,0,4.0,117.0,70.0,72.0,16.0,36.0,98.0,Acute urticaria,5
@@ -891,7 +891,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 0,33,12,2,1,nausea,0,0,4.0,110.0,70.0,80.0,20.0,36.1,99.0,"Superficial injury of other parts of head, contusion",4
 1,34,4,1,0,Delusional Idea,0,0,4.0,156.0,96.0,123.0,18.0,36.5,98.0,Sore throat,3
 0,34,10,2,0,dyspnea,0,0,4.0,132.0,77.0,76.0,20.0,36.6,98.0,Asthma,3
-0,34,8,2,0,DZ - Dizziness,0,0,4.0,117.0,80.0,76.0,16.0,36.0,98.0,Dizziness,3
+0,34,8,2,0,Dizziness,0,0,4.0,117.0,80.0,76.0,16.0,36.0,98.0,Dizziness,3
 0,34,7,2,1,cerebral concussion,0,0,4.0,139.0,83.0,90.0,20.0,36.0,98.0,Injury of head,4
 0,34,7,2,0,fever,0,0,4.0,170.0,100.0,80.0,20.0,36.0,98.0,Seasonal influenza virus identified influenzal acute upper respiratory infection,4
 0,34,4,2,0,fever,0,0,4.0,110.0,70.0,87.0,20.0,36.3,99.0,Acute pyelonephritis,4
@@ -955,7 +955,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,49,9,3,0,hematemesis,0,0,4.0,130.0,80.0,78.0,18.0,36.2,99.0,"Esophageal varices with bleeding, Idiopathic",2
 1,49,8,2,1,finger laceration,0,0,4.0,142.0,87.0,102.0,18.0,36.5,98.0,Laceration of finger without nail damage,4
 0,49,9,1,1,Suicidal Attempt,0,0,4.0,114.0,76.0,109.0,18.0,36.5,98.0,Suicide tendency,2
-1,49,8,2,1,"DI, drug intoxication",2,0,4.0,210.0,131.0,121.0,24.0,37.5,98.0,Drug intoxication,2
+1,49,8,2,1,drug intoxication,2,0,4.0,210.0,131.0,121.0,24.0,37.5,98.0,Drug intoxication,2
 0,49,9,2,0,nausea,0,0,4.0,140.0,90.0,64.0,22.0,36.3,99.0,Nausea alone,3
 0,49,3,2,0,ant. chest pain,0,0,4.0,110.0,60.0,76.0,20.0,36.0,99.0,Ischaemic chest pain,4
 1,50,7,2,1,eyelid laceration,0,0,4.0,137.0,76.0,103.0,16.0,36.3,98.0,Laceration of face,4
@@ -986,7 +986,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,53,5,3,0,anterior chest discomfort,0,0,4.0,130.0,80.0,104.0,22.0,36.2,98.0,"Atrial fibrillation and atrial flutter, unspecified",3
 1,53,7,3,0,whirling type vertigo,0,0,4.0,110.0,70.0,70.0,20.0,36.0,98.0,Vestibular neuronitis,3
 0,53,5,2,1,dizziness,0,0,4.0,130.0,80.0,80.0,18.0,36.1,97.0,"Ingested mushrooms, toxic effect of",2
-0,54,12,3,1,D - Diarrhea,0,0,4.0,130.0,80.0,101.0,20.0,36.5,96.0,"Pesticide, unspecified, toxic effect of",2
+0,54,12,3,1,Diarrhea,0,0,4.0,130.0,80.0,101.0,20.0,36.5,96.0,"Pesticide, unspecified, toxic effect of",2
 0,54,3,2,0,cough,0,0,4.0,180.0,100.0,108.0,24.0,36.6,80.0,Dyspnoea,3
 1,54,15,1,1,dysarthria,0,0,4.0,169.0,110.0,100.0,20.0,36.9,98.0,Dysarthria,3
 1,54,2,2,0,hemoptysis,0,0,4.0,130.0,90.0,90.0,20.0,36.2,97.0,Bronchiectasis,3
@@ -1004,7 +1004,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,57,8,2,0,palpitation,0,0,4.0,130.0,90.0,106.0,20.0,36.5,99.0,Paroxysmal atrial fibrillation,3
 0,57,2,2,0,dysuria,0,0,4.0,130.0,70.0,74.0,20.0,36.2,98.0,"Urinary tract infection, site not specified",4
 1,58,6,1,0,fever,0,0,4.0,130.0,80.0,100.0,20.0,36.9,98.0,Hepatitis NOS,3
-0,58,4,1,0,D - Diarrhea,0,0,4.0,110.0,60.0,100.0,18.0,36.2,98.0,Acute watery diarrhoea,3
+0,58,4,1,0,Diarrhea,0,0,4.0,110.0,60.0,100.0,18.0,36.2,98.0,Acute watery diarrhoea,3
 0,58,1,3,1,post-CPR state,3,0,4.0,140.0,80.0,122.0,16.0,36.0,90.0,Cardiac arrest with successful resuscitation,1
 1,58,5,3,1,"Discomfort, Throat",0,0,4.0,100.0,60.0,104.0,28.0,36.7,94.0,"Ingested mushrooms, toxic effect of",2
 0,58,10,1,0,vomiting,0,0,4.0,160.0,100.0,94.0,22.0,36.4,98.0,Nause with vomiting,2
@@ -1022,7 +1022,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,59,9,2,1,copy,0,0,4.0,110.0,70.0,75.0,16.0,37.0,98.0,Stroke,5
 0,60,8,2,0,hemoptysis,0,0,4.0,120.0,80.0,76.0,20.0,36.3,98.0,Haemoptysis,3
 0,60,7,2,0,facial palsy left,0,0,4.0,149.0,75.0,85.0,20.0,36.4,98.0,Bell's palsy,3
-1,60,8,1,0,DZ - Dizziness,0,0,4.0,146.0,80.0,81.0,20.0,36.0,98.0,Vestibular neuritis,3
+1,60,8,1,0,Dizziness,0,0,4.0,146.0,80.0,81.0,20.0,36.0,98.0,Vestibular neuritis,3
 1,60,5,2,0,Rt. side motor weakness,0,0,4.0,120.0,60.0,110.0,20.0,36.8,95.0,Cerebrovascular accident NOS,4
 0,60,6,2,0,fever,0,0,4.0,140.0,80.0,82.0,20.0,36.0,98.0,"Choledocholithiasis with cholangitis, With obstruction",4
 1,60,8,2,0,dyspnea,0,0,4.0,130.0,80.0,98.0,20.0,36.4,99.0,Dilated cardiomyopathy,3
@@ -1092,9 +1092,9 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,69,7,2,0,dyspnea,0,0,4.0,100.0,70.0,88.0,20.0,36.7,99.0,"Pleural effusion, NEC",3
 0,69,3,2,0,Urinary frequency,0,0,4.0,150.0,90.0,78.0,20.0,36.8,98.0,Dysuria,4
 0,70,15,3,0,melena,0,0,4.0,130.0,90.0,94.0,20.0,36.6,99.0,"Gastrointestinal haemorrhage, unspecified",3
-1,70,11,2,0,C - Coughing,0,0,4.0,130.0,80.0,100.0,22.0,36.4,90.0,"Pneumonia, unspecified",3
+1,70,11,2,0,Coughing,0,0,4.0,130.0,80.0,100.0,22.0,36.4,90.0,"Pneumonia, unspecified",3
 1,70,6,1,0,dizziness,0,0,4.0,150.0,90.0,100.0,20.0,36.0,97.0,Posterior canal benign positional vertigo,3
-0,70,2,2,0,DZ - Dizziness,0,0,4.0,180.0,100.0,80.0,20.0,36.0,98.0,Vestibular neuronitis,2
+0,70,2,2,0,Dizziness,0,0,4.0,180.0,100.0,80.0,20.0,36.0,98.0,Vestibular neuronitis,2
 0,70,9,0,0,rotatory vertigo,0,0,4.0,161.0,96.0,79.0,20.0,36.9,98.0,Vestibular neuronitis,3
 1,70,8,0,0,chest palpitation,0,0,4.0,120.0,80.0,84.0,20.0,36.4,94.0,Palpitations,3
 1,70,5,1,0,mental change,0,0,4.0,170.0,100.0,88.0,20.0,36.5,99.0,"Other specified diabetes mellitus, with hypoglycemia",2
@@ -1112,7 +1112,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,72,4,2,0,dyspnea,0,0,4.0,140.0,87.0,83.0,22.0,36.7,98.0,Observation for suspected malignant neoplasm,3
 1,72,13,2,0,BST high,0,0,4.0,123.0,87.0,64.0,20.0,36.8,98.0,Hyperosmolar hyperglycemic syndrome,2
 0,72,7,3,0,melena,0,0,4.0,120.0,70.0,60.0,20.0,36.3,99.0,"Gastrointestinal haemorrhage, unspecified",3
-0,73,6,2,0,DZ - Dizziness,0,0,4.0,120.0,70.0,90.0,20.0,36.4,97.0,Dizziness and giddiness,3
+0,73,6,2,0,Dizziness,0,0,4.0,120.0,70.0,90.0,20.0,36.4,97.0,Dizziness and giddiness,3
 0,73,11,1,0,epistaxis,0,0,4.0,200.0,100.0,96.0,20.0,36.0,98.0,Epistaxis,3
 0,73,4,2,0,numbness,0,0,4.0,171.0,80.0,76.0,16.0,36.7,98.0,Numbness,3
 0,73,8,5,0,dizziness,0,0,4.0,136.0,69.0,61.0,24.0,36.5,98.0,Psychogenic headache,3
@@ -1254,13 +1254,13 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Mental,Pain,
 1,49,5,2,0,abdomen distension,0,0,4.0,100.0,60.0,102.0,20.0,36.4,97.0,"Cirrhosis (of liver) NOS, unspecified",5
 0,54,10,1,0,dizziness,0,0,4.0,120.0,80.0,80.0,20.0,36.0,98.0,Dizziness and giddiness,3
 1,54,5,2,0,behavior change,1,0,4.0,110.0,70.0,77.0,20.0,36.1,96.0,Alcoholic encephalopathy,2
-1,58,7,2,0,LOC - Loss of consciousness,0,0,4.0,130.0,100.0,63.0,20.0,36.4,98.0,Other syncope and collapse,3
+1,58,7,2,0,Loss of consciousness,0,0,4.0,130.0,100.0,63.0,20.0,36.4,98.0,Other syncope and collapse,3
 0,67,7,1,0,general weakness,0,0,4.0,110.0,70.0,80.0,20.0,36.0,98.0,"Spondylopathy in other infectious and parasitic diseases classified elsewhere, lumbar region",3
 0,68,12,2,0,Amnesia,0,0,4.0,130.0,90.0,64.0,20.0,36.0,96.0,Transient global amnesia,3
 1,69,12,1,0,epistaxis,0,0,4.0,140.0,100.0,96.0,20.0,36.1,96.0,Epistaxis,3
 1,69,5,1,0,dizziness,0,0,4.0,150.0,90.0,68.0,20.0,36.8,98.0,Cerebrovascular accident NOS,3
 0,76,8,1,0,syncope,0,0,4.0,130.0,80.0,71.0,20.0,36.3,100.0,"Cerebral infarction, unspecified",2
-1,78,8,3,0,G/W-General weakness,0,0,4.0,80.0,50.0,74.0,20.0,36.5,95.0,Ventricular tachycardia,2
+1,78,8,3,0,General weakness,0,0,4.0,80.0,50.0,74.0,20.0,36.5,95.0,Ventricular tachycardia,2
 1,79,5,1,0,mental change,0,0,4.0,120.0,80.0,86.0,22.0,36.4,95.0,Cerebral infarction due to unspecified occlusion or stenosis of middle cerebral artery,2
 1,81,2,2,0,dysuria,0,0,4.0,120.0,80.0,94.0,20.0,36.4,97.0,Dysuria,4
 1,81,17,1,0,dizziness,0,0,4.0,130.0,90.0,80.0,20.0,36.2,99.0,Dizziness and giddiness,3

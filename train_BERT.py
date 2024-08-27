@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.nn import init
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
 from transformers import BertTokenizer, BertModel
@@ -11,11 +12,14 @@ import numpy as np
 import re
 from abbreviations import abbreviation_dict
 import matplotlib.pyplot as plt
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
+import seaborn as sns
 
 # Load the datasets
 train_data = pd.read_csv('data/ktas_train.csv', on_bad_lines='skip')
+train_data.drop(columns=['Patients number per hour', 'Diagnosis in ED'], inplace=True)
 val_data = pd.read_csv('data/ktas_val.csv', on_bad_lines='skip')
+val_data.drop(columns=['Patients number per hour', 'Diagnosis in ED'], inplace=True)
 
 # Initialize BERT tokenizer
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -96,29 +100,74 @@ val_dataset = MedicalRecordsDataset(val_input_ids, val_attention_masks, X_numeri
 train_dataloader = DataLoader(train_dataset, batch_size=16, shuffle=True)
 val_dataloader = DataLoader(val_dataset, batch_size=16, shuffle=False)
 
+# Displaying raw examples
+print(train_data[:5])
+
+# Display samples from the dataset
+print("Displaying some samples from the dataset:")
+for i in range(5):  # Show 5 samples
+    sample = train_dataset[i]
+    print(f"Sample {i}:")
+    print(f"Input IDs: {sample[0]}")
+    print(f"Attention Masks: {sample[1]}")
+    print(f"Numerical Data: {sample[2]}")
+    print(f"Label: {sample[3]}")
+    print()
+
+# Displaying raw examples
+print(val_data[:5])
+
+# Display samples from the dataset
+print("Displaying some samples from the dataset:")
+for i in range(5):  # Show 5 samples
+    sample = val_dataset[i]
+    print(f"Sample {i}:")
+    print(f"Input IDs: {sample[0]}")
+    print(f"Attention Masks: {sample[1]}")
+    print(f"Numerical Data: {sample[2]}")
+    print(f"Label: {sample[3]}")
+    print()
+
 class MedicalRecordClassifier(nn.Module):
     def __init__(self, bert_model_name='bert-base-uncased', num_classes=5):
         super(MedicalRecordClassifier, self).__init__()
         self.bert = BertModel.from_pretrained(bert_model_name)
         self.hidden_size = self.bert.config.hidden_size
+        
+        # Define the linear layers
         self.fc1 = nn.Linear(self.hidden_size + len(numerical_columns), 128)
         self.fc2 = nn.Linear(128, 64)
         self.fc3 = nn.Linear(64, num_classes)
+        
+        # Define dropout and batch normalization
         self.dropout1 = nn.Dropout(0.3)
         self.dropout2 = nn.Dropout(0.2)
-        self.batch_norm = nn.BatchNorm1d(64)
+        self.batch_norm = nn.BatchNorm1d(self.hidden_size + len(numerical_columns))
+
+        # Initialize weights
+        self._initialize_weights()
+
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                init.kaiming_normal_(m.weight, nonlinearity='relu')  # He initialization
+                if m.bias is not None:
+                    init.zeros_(m.bias)
+            elif isinstance(m, nn.BatchNorm1d):
+                init.ones_(m.weight)  # BatchNorm scales are set to 1
+                init.zeros_(m.bias)  # BatchNorm biases are set to 0
 
     def forward(self, input_ids, attention_mask, numerical_data):
         bert_output = self.bert(input_ids, attention_mask=attention_mask).last_hidden_state.mean(dim=1)
         combined_features = torch.cat((bert_output, numerical_data), dim=1)
         
-        # Adjust BatchNorm1d based on the actual input size
-        batch_norm = nn.BatchNorm1d(combined_features.size(1)).to(combined_features.device)
-        combined_features = batch_norm(combined_features)
+        # Apply BatchNorm
+        combined_features = self.batch_norm(combined_features)
         
         combined_features = self.dropout1(nn.ReLU()(self.fc1(combined_features)))
         combined_features = self.dropout2(nn.ReLU()(self.fc2(combined_features)))
         output = self.fc3(combined_features)
+        
         return output
 
 # Instantiate the model
@@ -127,11 +176,11 @@ model = MedicalRecordClassifier()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0005)
 criterion = nn.CrossEntropyLoss()
 
-def train_model(model, train_dataloader, val_dataloader, epochs=50):
-    history = {'accuracy': [], 'val_accuracy': [], 'loss': [], 'val_loss': []}
+def train_model(model, train_dataloader, val_dataloader, epochs=100):
+    history = {'accuracy': [], 'val_accuracy': [], 'loss': [], 'val_loss': [], 'best_val_accuracy': 0.0}
     for epoch in range(epochs):
         model.train()
         running_loss = 0.0
@@ -196,12 +245,18 @@ def train_model(model, train_dataloader, val_dataloader, epochs=50):
         print(f'Train Loss: {epoch_loss:.4f}, Train Accuracy: {epoch_accuracy:.4f}')
         print(f'Val Loss: {val_loss:.4f}, Val Accuracy: {val_accuracy:.4f}')
 
+        # Track the best model
+        if val_accuracy > history['best_val_accuracy']:
+            history['best_val_accuracy'] = val_accuracy
+            torch.save(model.state_dict(), f"bert_model_{history['best_val_accuracy']:.4f}.pth")
+
     return history
 
 # Train the model
 history = train_model(model, train_dataloader, val_dataloader)
 
-# Evaluate the model
+# Reload the best model and evaluate metrics
+model.load_state_dict(torch.load(f"bert_model_{history['best_val_accuracy']:.4f}.pth"))
 model.eval()
 all_labels = []
 all_preds = []
@@ -224,7 +279,17 @@ with torch.no_grad():
 
 # Print classification report
 class_names = [str(label) for label in label_encoder.classes_]
+print("True labels: ", all_labels)
+print("Predicted labels: ", all_preds)
+print("Class names: ", class_names)
 print(classification_report(all_labels, all_preds, target_names=class_names))
+
+# Plot confusion matrix
+cm = confusion_matrix(all_labels, all_preds)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
+plt.xlabel('Predicted')
+plt.ylabel('True')
+plt.show()
 
 # Plot accuracy and loss
 plt.figure(figsize=(12, 5))

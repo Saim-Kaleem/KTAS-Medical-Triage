@@ -84,3 +84,19 @@ print(df['embeddings'][0])
 
 X_text = pad_sequences(df['embeddings'], maxlen=max_length, padding='post', dtype='float32')
 print(X_text[0])
+
+# Padding sequences for PyTorch
+def pad_sequence(sequences, maxlen, embedding_dim):
+    padded_sequences = np.zeros((len(sequences), maxlen, embedding_dim), dtype=np.float32)
+    for i, seq in enumerate(sequences):
+        if len(seq) > 0:
+            # Ensure the sequence length does not exceed the max length
+            length = min(len(seq), maxlen)
+            padded_sequences[i, :length] = seq[:length]
+        else:
+            # Handle empty sequences with zeros (already zeroed out by np.zeros initialization)
+            padded_sequences[i] = np.zeros((maxlen, embedding_dim))
+    return padded_sequences
+
+X_text2 = pad_sequence(df['embeddings'].tolist(), max_length, embedding_dim)
+print(X_text2[0])

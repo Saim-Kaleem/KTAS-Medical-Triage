@@ -113,6 +113,7 @@ class CustomDataset(Dataset):
         return self.X_text[idx], self.X_numerical[idx], self.y[idx]
 
 # Define the PyTorch model architecture
+
 class KTASModel(nn.Module):
     def __init__(self, text_input_shape, numerical_input_shape, output_size):
         super(KTASModel, self).__init__()
@@ -127,7 +128,41 @@ class KTASModel(nn.Module):
         self.fc3 = nn.Linear(64, output_size)
         self.dropout1 = nn.Dropout(0.3)
         self.dropout2 = nn.Dropout(0.2)
+
+        # Apply Kaiming He initialization
+        self._initialize_weights()
+
+    def _initialize_weights(self):
+        # Initialize Conv1d layer
+        nn.init.kaiming_normal_(self.conv1d.weight, mode='fan_in', nonlinearity='relu')
+        if self.conv1d.bias is not None:
+            nn.init.zeros_(self.conv1d.bias)
+
+        # Initialize Linear layers
+        nn.init.kaiming_normal_(self.fc_query.weight, mode='fan_in', nonlinearity='relu')
+        if self.fc_query.bias is not None:
+            nn.init.zeros_(self.fc_query.bias)
         
+        nn.init.kaiming_normal_(self.fc_key.weight, mode='fan_in', nonlinearity='relu')
+        if self.fc_key.bias is not None:
+            nn.init.zeros_(self.fc_key.bias)
+        
+        nn.init.kaiming_normal_(self.fc_value.weight, mode='fan_in', nonlinearity='relu')
+        if self.fc_value.bias is not None:
+            nn.init.zeros_(self.fc_value.bias)
+        
+        nn.init.kaiming_normal_(self.fc1.weight, mode='fan_in', nonlinearity='relu')
+        if self.fc1.bias is not None:
+            nn.init.zeros_(self.fc1.bias)
+        
+        nn.init.kaiming_normal_(self.fc2.weight, mode='fan_in', nonlinearity='relu')
+        if self.fc2.bias is not None:
+            nn.init.zeros_(self.fc2.bias)
+        
+        nn.init.kaiming_normal_(self.fc3.weight, mode='fan_in', nonlinearity='relu')
+        if self.fc3.bias is not None:
+            nn.init.zeros_(self.fc3.bias)
+
     def attention(self, x):
         query = self.fc_query(x)
         key = self.fc_key(x)

@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import init
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
-from transformers import BertTokenizer, BertModel
+from transformers import AutoTokenizer, AutoModel
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.utils import class_weight
 from imblearn.over_sampling import SMOTE
@@ -24,7 +24,7 @@ val_data = pd.read_csv('data/ktas_val.csv', on_bad_lines='skip')
 val_data.drop(columns=['Patients number per hour', 'Diagnosis in ED'], inplace=True)
 
 # Initialize BERT tokenizer
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+tokenizer = AutoTokenizer.from_pretrained('emilyalsentzer/Bio_ClinicalBERT')
 
 def tokenize_texts(texts, tokenizer, max_len=6):
     input_ids = []
@@ -139,9 +139,9 @@ for i in range(5):  # Show 5 samples
     print()
 
 class MedicalRecordClassifier(nn.Module):
-    def __init__(self, bert_model_name='bert-base-uncased', num_classes=5):
+    def __init__(self, bert_model_name='emilyalsentzer/Bio_ClinicalBERT', num_classes=5):
         super(MedicalRecordClassifier, self).__init__()
-        self.bert = BertModel.from_pretrained(bert_model_name)
+        self.bert = AutoModel.from_pretrained(bert_model_name)
         self.hidden_size = self.bert.config.hidden_size
         
         # Define the linear layers
@@ -319,4 +319,4 @@ plt.legend()
 
 plt.show()
 
-# https://huggingface.co/google-bert/bert-base-uncased
+# https://huggingface.co/emilyalsentzer/Bio_ClinicalBERT

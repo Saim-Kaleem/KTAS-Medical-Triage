@@ -16,7 +16,7 @@ from sklearn.utils import class_weight
 from abbreviations import abbreviation_dict
 
 # Load and preprocess the dataset
-data = pd.read_csv('data_cleaned.csv', on_bad_lines='skip')
+data = pd.read_csv('data/data_cleaned.csv', on_bad_lines='skip')
 
 # Required columns
 text_columns = ['Chief_complain']
@@ -142,7 +142,7 @@ history = {'accuracy': [], 'val_accuracy': [], 'loss': [], 'val_loss': []}
 for epoch in range(epochs):
     print(f"Epoch {epoch+1}/{epochs}")
     
-    if epoch < 8:
+    if epoch < 40:
         # Apply class weights
         current_history = model.fit([X_text, X_numerical], y, epochs=1, batch_size=batch_size, validation_split=0.2, shuffle=True, class_weight=class_weights_dict)
     else:

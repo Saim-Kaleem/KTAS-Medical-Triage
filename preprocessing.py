@@ -8,6 +8,7 @@ from abbreviations import abbreviation_dict
 
 df = pd.read_csv('data/data_cleaned2.csv', on_bad_lines='skip')
 df.drop(columns=['Diagnosis in ED'], axis=1, inplace=True)
+print(df['KTAS_expert'].value_counts())
 
 # Number of words/unique words
 total_words =  ' '.join(df['Chief_complain'].values)

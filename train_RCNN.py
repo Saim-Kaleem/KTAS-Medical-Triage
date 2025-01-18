@@ -3,7 +3,7 @@ import re
 import numpy as np
 from gensim.models import Word2Vec, KeyedVectors
 from tensorflow.keras import Model, Input
-from tensorflow.keras.layers import Conv1D, GlobalMaxPooling1D, Dense, Dropout, Dot, Softmax, Multiply, Add, Concatenate, BatchNormalization, Bidirectional, LSTM
+from tensorflow.keras.layers import Conv1D, MaxPooling1D, GlobalMaxPooling1D, Dense, Dropout, Dot, Softmax, Reshape, Multiply, Add, Concatenate, BatchNormalization, Bidirectional, LSTM
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -19,6 +19,19 @@ from imblearn.over_sampling import SMOTE
 from sklearn.utils import shuffle
 from scipy import interp
 from itertools import cycle
+
+# Function to visualize attention scores
+def plot_attention(text, attention_scores, max_len):
+    fig = plt.figure(figsize=(10, 4))
+    ax = fig.add_subplot(111)
+    if len(attention_scores.shape) == 1:
+        attention_scores = np.expand_dims(attention_scores, axis=0)
+    ax.matshow(attention_scores, cmap='viridis')
+    ax.set_xticks(np.arange(len(text)))
+    ax.set_yticks([0])
+    ax.set_xticklabels(text, rotation=90)
+    ax.set_yticklabels(['Attention'])
+    plt.show()
 
 # Load and preprocess the dataset
 data = pd.read_csv('data/data_cleaned2.csv', on_bad_lines='skip')
@@ -122,26 +135,15 @@ for train_index, val_index in kfold.split(X_text, y):
     numerical_inputs = Input(shape=numerical_input_shape, name='numerical_input')
 
     # CNN-based n-gram encoder for text inputs
-    conv_layer = Conv1D(filters=128, kernel_size=3, activation='relu', kernel_initializer='he_normal')(text_inputs)
-    conv_layer = GlobalMaxPooling1D()(conv_layer) 
+    conv_layer = Conv1D(filters=128, kernel_size=3, padding='same', activation='relu', kernel_initializer='he_normal')(text_inputs)
+    conv_layer = MaxPooling1D(pool_size=2)(conv_layer)
+    conv_layer = Conv1D(filters=128, kernel_size=3, padding='same', activation='relu', kernel_initializer='he_normal')(conv_layer)
+    conv_layer = MaxPooling1D(pool_size=2)(conv_layer)
 
-    # Attention mechanism using Dot product
-    query = Dense(128)(conv_layer)
-    key = Dense(128)(conv_layer)
-    value = Dense(128)(conv_layer)
-
-    attention_scores = Dot(axes=-1)([query, key])
-    attention_scores = Softmax()(attention_scores)
-    attention_output = Multiply()([attention_scores, value])
-
-    # Adding the attention output to the convolution output (skip connection)
-    attention_output = Add()([conv_layer, attention_output]) 
-
-    # Apply batch normalization to the attention output
-    attention_output = BatchNormalization()(attention_output)
+    # Attention mechanism
 
     # Bidirectional LSTM layer
-    lstm_layer = Bidirectional(LSTM(units=128, return_sequences=False, dropout=0.2, recurrent_dropout=0.2))(text_inputs)
+    lstm_layer = Bidirectional(LSTM(units=128, return_sequences=False, dropout=0.2, recurrent_dropout=0.2))(conv_layer)
 
     # Concatenate text and numerical inputs
     combined_inputs = Concatenate()([lstm_layer, numerical_inputs]) 
@@ -248,7 +250,7 @@ for train_index, val_index in kfold.split(X_text, y):
     plt.ylabel('True Positive Rate')
     plt.title('Receiver Operating Characteristic')
     plt.legend(loc="lower right")
-    plt.show
+    plt.show()
 
     fold_no += 1
 

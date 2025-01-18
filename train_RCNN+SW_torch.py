@@ -139,18 +139,6 @@ class KTASModel(nn.Module):
             nn.init.zeros_(self.conv1d.bias)
 
         # Initialize Linear layers
-        nn.init.kaiming_normal_(self.fc_query.weight, mode='fan_in', nonlinearity='relu')
-        if self.fc_query.bias is not None:
-            nn.init.zeros_(self.fc_query.bias)
-        
-        nn.init.kaiming_normal_(self.fc_key.weight, mode='fan_in', nonlinearity='relu')
-        if self.fc_key.bias is not None:
-            nn.init.zeros_(self.fc_key.bias)
-        
-        nn.init.kaiming_normal_(self.fc_value.weight, mode='fan_in', nonlinearity='relu')
-        if self.fc_value.bias is not None:
-            nn.init.zeros_(self.fc_value.bias)
-        
         nn.init.kaiming_normal_(self.fc1.weight, mode='fan_in', nonlinearity='relu')
         if self.fc1.bias is not None:
             nn.init.zeros_(self.fc1.bias)
@@ -158,10 +146,6 @@ class KTASModel(nn.Module):
         nn.init.kaiming_normal_(self.fc2.weight, mode='fan_in', nonlinearity='relu')
         if self.fc2.bias is not None:
             nn.init.zeros_(self.fc2.bias)
-        
-        nn.init.kaiming_normal_(self.fc3.weight, mode='fan_in', nonlinearity='relu')
-        if self.fc3.bias is not None:
-            nn.init.zeros_(self.fc3.bias)
 
     def attention(self, x):
         query = self.fc_query(x)

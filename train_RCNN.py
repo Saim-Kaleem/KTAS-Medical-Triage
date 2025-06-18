@@ -17,7 +17,6 @@ from abbreviations import abbreviation_dict
 from sklearn.utils import class_weight
 from imblearn.over_sampling import SMOTE
 from sklearn.utils import shuffle
-from scipy import interp
 from itertools import cycle
 
 # Function to visualize attention scores
